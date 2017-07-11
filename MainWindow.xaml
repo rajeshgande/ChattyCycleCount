@@ -1,0 +1,53 @@
+﻿<Window x:Class="ChattyCycleCount.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ChattyCycleCount"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        Title="Chatty Cycle Count" Height="1280" Width="1024">
+
+    <Window.Resources>
+        <Style x:Key="MyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="MaxHeight" Value="42"/>
+            <Setter Property="Margin" Value="20,0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Background="#FF333333">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            <Grid Background="Black" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="HearththrobAnimation" gif:ImageBehavior.AnimatedSource="Images/animation.gif" gif:ImageBehavior.AnimationLoaded="OnAnimationLoaded" Stretch="Uniform"/>
+                <UniformGrid Rows="5" Grid.Row="1" HorizontalAlignment="Stretch">
+                    <Button x:Name="StartButton" Content="Start Recording" Click="OnStartButtonClick" Style="{StaticResource MyButtonStyle}" />
+                    <Button x:Name="ButtonMute" Content="Mute" Click="OnMuteButtonClick" Style="{StaticResource MyButtonStyle}"/>
+                    <Button x:Name="ButtonClearTheTranscript" Content="Reset" Click="OnResetButtonClick" Style="{StaticResource MyButtonStyle}"/>
+                </UniformGrid>
+            </Grid>
+        <GridSplitter Width="4" Background="#FF666666"/>
+        <Grid Grid.Column="2">
+            <DockPanel LastChildFill="True">
+                <TextBlock x:Name="WhatTheComputerThinksTheUserIsSayingTextbox"
+                 DockPanel.Dock="Top" Background="DimGray" Margin="0" Padding="8" Foreground="White"
+                 FontSize="19"
+                 FontWeight="SemiBold" FontFamily="Arial"
+                 TextWrapping="Wrap"/>
+
+                <Border Background="{x:Null}">
+            <FlowDocumentScrollViewer x:Name="ChatTranscriptViewer"
+                                      Margin="8" FontFamily="Arial"
+                                      VerticalScrollBarVisibility="Auto"/>
+        </Border>
+
+    </DockPanel>
+        </Grid>
+    </Grid>
+    
+</Window>

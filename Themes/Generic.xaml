@@ -1,0 +1,90 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Default Button -->
+    <SolidColorBrush x:Key="Button.Default.Background" Color="#FF6EB86B"/>
+    <SolidColorBrush x:Key="Button.Default.Border" Color="#FF6EB86B"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FF11440E"/>
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Slate.Button.FocusVisualRounded}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource Button.Default.Background}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Button.Default.Border}"/>
+
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontStretch" Value="SemiExpanded"/>
+        <Setter Property="MinWidth" Value="170"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="Padding" Value="20,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="bkgrndPressed" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1" To="1"/>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="frgndDisabled" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="contentPresenter">
+                                            <EasingColorKeyFrame KeyTime="0" Value="#FF808080"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused"/>
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="bkgrndFocus" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1" To="1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <!-- border + base background  -->
+                        <Rectangle Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" RadiusX="20" RadiusY="20" StrokeThickness="2"/>
+                        <!-- focused -->
+                        <Rectangle x:Name="bkgrndFocus" Margin="0" Opacity="0"
+                            Fill="{x:Null}" Stroke="{DynamicResource Slate.DarkBlue.FocusBrush}" RadiusX="20" RadiusY="20" StrokeThickness="3"/>
+                        <!-- pressed -->
+                        <Rectangle x:Name="bkgrndPressed" Margin="0" Opacity="0"
+                            Fill="{StaticResource Button.Pressed.Background}" Stroke="{x:Null}" RadiusX="20" RadiusY="20" StrokeThickness="0"/>
+                        <!-- content -->
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" RecognizesAccessKey="True"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.RenderTransform>
+                                <TranslateTransform X="0" Y="0"/>
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                        <!-- disabled -->
+                        <Rectangle x:Name="frgndDisabled" Visibility="Collapsed"
+                                   Fill="#FFEEEEEE" Opacity="0.5" Stroke="{x:Null}" RadiusX="20" RadiusY="20" StrokeThickness="0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
